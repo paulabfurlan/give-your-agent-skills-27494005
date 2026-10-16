@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7ef">
+  <meta name="description" content="Ten fresh, unfussy recipes for the everyday table.">
+  <title>Good Things to Eat — A Little Recipe Book</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --paper: #f5f7ef;
+      --ink: #20281f;
+      --muted: #687166;
+      --green: #315c43;
+      --green-light: #e7eee3;
+      --tomato: #c75136;
+      --line: #dfe5d9;
+      --white: #fff;
+      font-family: "DM Sans", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--paper); color: var(--ink); }
+    button, input { font: inherit; }
+    button { color: inherit; }
+    .page { max-width: 1440px; margin: 0 auto; padding: 0 6.25%; }
+    .topbar { height: 76px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+    .brand { display: flex; align-items: center; gap: 10px; color: var(--green); font-size: 14px; font-weight: 700; letter-spacing: .04em; text-decoration: none; }
+    .brand-mark { display: grid; width: 28px; height: 28px; place-items: center; border: 1.5px solid var(--green); border-radius: 50%; font-family: "Playfair Display", serif; font-size: 19px; }
+    .top-note { color: var(--muted); font-size: 12px; }
+    .intro { display: grid; grid-template-columns: 1fr auto; align-items: end; gap: 30px; padding: 64px 0 38px; }
+    .eyebrow { margin: 0 0 14px; color: var(--tomato); font-size: 11px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 { max-width: 650px; margin-bottom: 13px; font-family: "Playfair Display", Georgia, serif; font-size: clamp(42px, 5vw, 66px); font-weight: 500; letter-spacing: 0; line-height: 1.06; }
+    .intro-copy { max-width: 480px; margin-bottom: 0; color: var(--muted); font-size: 15px; line-height: 1.65; }
+    .recipe-count { display: flex; align-items: center; gap: 11px; padding-bottom: 5px; color: var(--muted); font-size: 12px; white-space: nowrap; }
+    .count-dot { width: 8px; height: 8px; border-radius: 50%; background: #8aa76e; }
+    .toolbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 20px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .filters { display: flex; flex-wrap: wrap; gap: 8px; }
+    .filter { min-height: 36px; padding: 0 14px; border: 1px solid transparent; border-radius: 20px; background: transparent; color: var(--muted); cursor: pointer; font-size: 12px; transition: background .18s, color .18s, border-color .18s; }
+    .filter:hover { color: var(--ink); }
+    .filter[aria-pressed="true"] { border-color: var(--green); background: var(--green); color: white; }
+    .search { position: relative; width: min(100%, 240px); flex: 0 0 240px; }
+    .search svg { position: absolute; top: 50%; left: 13px; width: 16px; height: 16px; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+    .search input { width: 100%; height: 40px; padding: 0 12px 0 38px; border: 1px solid var(--line); border-radius: 5px; outline: none; background: rgba(255,255,255,.65); color: var(--ink); font-size: 12px; }
+    .search input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(49,92,67,.12); }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 36px 24px; padding: 32px 0 64px; }
+    .recipe { min-width: 0; animation: arrive .4s both; }
+    @keyframes arrive { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    .recipe-button { display: block; width: 100%; padding: 0; border: 0; background: none; cursor: pointer; text-align: left; }
+    .recipe-button:focus-visible { outline: 3px solid #86a77c; outline-offset: 4px; }
+    .photo-wrap { position: relative; overflow: hidden; aspect-ratio: 1.45; border-radius: 4px; background: var(--green-light); }
+    .photo { width: 100%; height: 100%; object-fit: cover; transition: transform .35s; }
+    .recipe-button:hover .photo { transform: scale(1.035); }
+    .tag { position: absolute; top: 12px; left: 12px; padding: 6px 9px; border-radius: 2px; background: rgba(255,255,255,.93); color: var(--green); font-size: 10px; font-weight: 700; letter-spacing: .03em; }
+    .recipe-info { display: grid; grid-template-columns: 1fr auto; align-items: start; gap: 12px; padding: 14px 1px 0; }
+    .recipe h2 { margin: 0 0 6px; font-family: "Playfair Display", Georgia, serif; font-size: 20px; font-weight: 600; line-height: 1.25; }
+    .description { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.55; }
+    .time { padding-top: 3px; color: var(--muted); font-size: 11px; white-space: nowrap; }
+    .empty { grid-column: 1 / -1; padding: 50px 12px; color: var(--muted); text-align: center; }
+    .empty strong { display: block; margin-bottom: 6px; color: var(--ink); font-family: "Playfair Display", Georgia, serif; font-size: 23px; font-weight: 500; }
+    footer { display: flex; justify-content: space-between; gap: 20px; padding: 20px 0 30px; border-top: 1px solid var(--line); color: var(--muted); font-size: 11px; }
+    dialog { width: min(620px, calc(100% - 32px)); max-height: min(88vh, 850px); padding: 0; overflow: auto; border: 0; border-radius: 7px; background: var(--paper); color: var(--ink); box-shadow: 0 24px 80px rgba(24,38,25,.28); }
+    dialog::backdrop { background: rgba(22,32,24,.58); backdrop-filter: blur(3px); }
+    .dialog-photo { display: block; width: 100%; max-height: 290px; aspect-ratio: 1.8; object-fit: cover; background: var(--green-light); }
+    .dialog-content { padding: 28px 32px 32px; }
+    .dialog-top { display: flex; align-items: start; justify-content: space-between; gap: 20px; }
+    .dialog-top h2 { margin: 0 0 6px; font-family: "Playfair Display", Georgia, serif; font-size: 32px; font-weight: 500; }
+    .close { display: grid; flex: 0 0 34px; width: 34px; height: 34px; place-items: center; border: 1px solid var(--line); border-radius: 50%; background: transparent; cursor: pointer; font-size: 20px; }
+    .dialog-meta { margin-bottom: 24px; color: var(--muted); font-size: 12px; }
+    .dialog-content h3 { margin: 22px 0 10px; color: var(--green); font-size: 11px; letter-spacing: .11em; text-transform: uppercase; }
+    .ingredients { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 20px; margin: 0; padding: 0; list-style: none; }
+    .ingredients li { display: flex; gap: 9px; color: #454d43; font-size: 13px; line-height: 1.45; }
+    .ingredients li::before { color: var(--tomato); content: "+"; font-weight: 700; }
+    .steps { display: grid; gap: 10px; margin: 0; padding-left: 20px; color: #454d43; font-size: 13px; line-height: 1.6; }
+    .steps li { padding-left: 4px; }
+    .steps li::marker { color: var(--tomato); font-weight: 700; }
+    @media (max-width: 800px) { .page { padding: 0 5%; } .intro { padding-top: 48px; } .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 30px 18px; } }
+    @media (max-width: 560px) { .topbar { height: 64px; } .top-note { font-size: 10px; } .intro { grid-template-columns: 1fr; gap: 15px; padding: 40px 0 26px; } h1 { font-size: 46px; } .recipe-count { padding: 0; } .toolbar { align-items: stretch; flex-direction: column-reverse; gap: 12px; } .search { width: 100%; flex: auto; } .filters { gap: 4px; } .filter { padding: 0 11px; } .grid { gap: 24px 12px; padding-top: 24px; } .photo-wrap { aspect-ratio: 1.08; } .recipe-info { grid-template-columns: 1fr; gap: 4px; padding-top: 10px; } .recipe h2 { font-size: 17px; } .description { display: none; } .time { padding-top: 0; } footer { flex-direction: column; gap: 6px; } .dialog-content { padding: 23px 20px 26px; } .dialog-top h2 { font-size: 27px; } .ingredients { grid-template-columns: 1fr; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Good Things to Eat home"><span class="brand-mark" aria-hidden="true">g</span> GOOD THINGS TO EAT</a>
+      <span class="top-note">A little recipe book for every day</span>
+    </header>
+
+    <main id="top">
+      <section class="intro" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">From our kitchen, with love</p>
+          <h1 id="page-title">Good food.<br>Good mood.</h1>
+          <p class="intro-copy">A handful of lovely things to make and share. Nothing too fussy, everything full of flavor.</p>
+        </div>
+        <div class="recipe-count"><span class="count-dot" aria-hidden="true"></span><span id="count">10 recipes to make</span></div>
+      </section>
+
+      <section aria-label="Browse recipes">
+        <div class="toolbar">
+          <div class="filters" role="group" aria-label="Filter recipes by category">
+            <button class="filter" type="button" data-filter="All" aria-pressed="true">All recipes</button>
+            <button class="filter" type="button" data-filter="Breakfast" aria-pressed="false">Breakfast</button>
+            <button class="filter" type="button" data-filter="Lunch" aria-pressed="false">Lunch</button>
+            <button class="filter" type="button" data-filter="Dinner" aria-pressed="false">Dinner</button>
+            <button class="filter" type="button" data-filter="Sweet" aria-pressed="false">Something sweet</button>
+          </div>
+          <label class="search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.2 4.2"></path></svg>
+            <input id="search" type="search" placeholder="Find a recipe..." aria-label="Search recipes">
+          </label>
+        </div>
+        <div class="grid" id="recipes" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <footer><span>Made for slow Sundays and busy Tuesdays.</span><span>Ten recipes, plenty of seconds.</span></footer>
+  </div>
+
+  <dialog id="recipe-dialog" aria-labelledby="dialog-title">
+    <img class="dialog-photo" id="dialog-photo" alt="">
+    <div class="dialog-content">
+      <div class="dialog-top"><div><p class="eyebrow" id="dialog-category"></p><h2 id="dialog-title"></h2></div><button class="close" type="button" aria-label="Close recipe">×</button></div>
+      <p class="dialog-meta" id="dialog-meta"></p>
+      <h3>What you'll need</h3><ul class="ingredients" id="dialog-ingredients"></ul>
+      <h3>Let's make it</h3><ol class="steps" id="dialog-steps"></ol>
+    </div>
+  </dialog>
+
+  <script>
+    const recipes = [
+      { title: "Lemony ricotta pancakes", category: "Breakfast", time: "20 min", description: "Soft, golden-edged and bright with fresh lemon.", image: "photo-1528207776546-365bb710ee93", alt: "A stack of golden pancakes with fruit", ingredients: ["1 cup all-purpose flour", "¾ cup ricotta", "2 eggs", "½ cup milk", "Zest of 1 lemon", "1 tbsp sugar", "1 tsp baking powder", "Butter and maple syrup"], steps: ["Whisk flour, sugar and baking powder in a bowl. In another bowl, mix ricotta, eggs, milk and lemon zest.", "Fold wet ingredients into dry until just combined. A few small lumps are fine.", "Cook small scoops in a buttered skillet over medium heat, about 2 minutes per side. Serve warm with maple syrup."] },
+      { title: "Green goddess grain bowl", category: "Lunch", time: "30 min", description: "Herby dressing, crisp greens and a very good lunch.", image: "photo-1512621776951-a57141f2eefd", alt: "A colorful bowl of fresh greens and vegetables", ingredients: ["1 cup farro or quinoa", "1 ripe avocado", "1 cucumber, sliced", "2 cups mixed greens", "½ cup Greek yogurt", "1 handful soft herbs", "1 lemon", "Olive oil, salt and pepper"], steps: ["Cook the farro or quinoa in salted water until tender. Drain and let cool slightly.", "Blend yogurt, herbs, lemon juice, a splash of olive oil, salt and pepper until smooth.", "Arrange grains, greens, cucumber and avocado in bowls. Spoon over the dressing and finish with cracked pepper."] },
+      { title: "Spaghetti with slow tomatoes", category: "Dinner", time: "35 min", description: "Jammy cherry tomatoes meet their match in pasta.", image: "photo-1473093295043-cdd812d0e601", alt: "A plate of pasta with fresh herbs", ingredients: ["12 oz spaghetti", "2 pints cherry tomatoes", "3 garlic cloves, sliced", "¼ cup olive oil", "½ tsp chili flakes", "½ cup grated parmesan", "Fresh basil", "Salt and black pepper"], steps: ["Warm olive oil in a wide pan. Add garlic and chili flakes; cook gently for 1 minute.", "Add tomatoes and a generous pinch of salt. Cook, stirring now and then, until they burst and turn saucy, 20 to 25 minutes.", "Boil spaghetti until just shy of al dente. Toss into the tomato pan with a splash of pasta water. Finish with parmesan and basil."] },
+      { title: "Crispy chickpea salad", category: "Lunch", time: "25 min", description: "A crunchy, zingy salad with a little bit of heat.", image: "photo-1546069901-ba9599a7e63c", alt: "A vibrant salad bowl with vegetables and greens", ingredients: ["1 can chickpeas, drained", "1 tsp smoked paprika", "1 romaine heart, chopped", "1 cup cherry tomatoes", "½ cucumber", "¼ cup tahini", "1 lemon", "2 tbsp water"], steps: ["Pat chickpeas dry, toss with paprika, oil and salt, then roast at 425°F (220°C) until crisp, about 20 minutes.", "Whisk tahini, lemon juice, water and a pinch of salt until creamy.", "Toss lettuce, tomatoes and cucumber with half the dressing. Pile on crispy chickpeas and drizzle with the rest."] },
+      { title: "Brown butter banana bread", category: "Sweet", time: "70 min", description: "Deeply cozy, with a crackly top and tender middle.", image: "photo-1605286978633-2dec93ff88a2", alt: "Freshly baked banana bread on a board", ingredients: ["½ cup unsalted butter", "3 very ripe bananas", "¾ cup brown sugar", "1 egg", "1 tsp vanilla", "1½ cups all-purpose flour", "1 tsp baking soda", "½ tsp salt"], steps: ["Brown the butter in a small pan over medium heat, swirling until nutty and amber. Let cool for 10 minutes.", "Mash bananas; stir in brown butter, sugar, egg and vanilla. Fold in flour, baking soda and salt.", "Pour into a lined loaf pan. Bake at 350°F (175°C) for 55 to 60 minutes, until a tester comes out clean."] },
+      { title: "Miso butter mushrooms on toast", category: "Breakfast", time: "15 min", description: "Savory, buttery mushrooms on thick sourdough.", image: "photo-1525351484163-7529414344d8", alt: "A savory open-faced breakfast toast", ingredients: ["8 oz mixed mushrooms, sliced", "2 tbsp butter", "1 tbsp white miso", "2 thick slices sourdough", "1 small garlic clove", "1 tsp lemon juice", "Chives, to finish", "Black pepper"], steps: ["Toast sourdough until crisp and rub each slice with the cut side of a garlic clove.", "Sear mushrooms in a hot skillet until golden. Add butter and miso with a splash of water; stir until glossy.", "Spoon mushrooms over toast. Add lemon juice, chives and black pepper."] },
+      { title: "Roasted tomato & white bean soup", category: "Dinner", time: "45 min", description: "A silky, pantry-friendly bowl with crusty bread.", image: "photo-1547592180-85f173990554", alt: "A hearty bowl of soup ready to serve", ingredients: ["2 pints cherry tomatoes", "1 yellow onion, quartered", "4 garlic cloves", "2 cans white beans, drained", "3 cups vegetable stock", "2 tbsp olive oil", "1 tsp dried thyme", "Crusty bread, to serve"], steps: ["Roast tomatoes, onion and garlic with olive oil, thyme and salt at 425°F (220°C) for 25 minutes.", "Tip the roasted vegetables into a pot. Add beans and stock, then simmer for 10 minutes.", "Blend until smooth, adjust seasoning, and serve with warm crusty bread."] },
+      { title: "Peach & burrata toasts", category: "Lunch", time: "15 min", description: "Juicy summer peaches, creamy cheese, good bread.", image: "photo-1505576399274-565b52d4ac71", alt: "A fresh summer dish with colorful produce", ingredients: ["4 slices sourdough", "2 ripe peaches", "1 ball burrata", "1 tbsp honey", "1 tbsp olive oil", "A few basil leaves", "Flaky salt", "Black pepper"], steps: ["Toast the sourdough and brush lightly with olive oil.", "Tear burrata over the toast. Slice peaches and arrange on top.", "Drizzle with honey and a little more oil. Scatter torn basil, flaky salt and black pepper over everything."] },
+      { title: "One-pan lemony chicken & orzo", category: "Dinner", time: "40 min", description: "Golden chicken, tender orzo, one pan to wash.", image: "photo-1532550907401-a500c9a57435", alt: "A golden roasted chicken dinner", ingredients: ["4 chicken thighs", "1 cup orzo", "1 small onion, diced", "2 garlic cloves, minced", "2½ cups chicken stock", "1 lemon", "1 tsp dried oregano", "2 handfuls baby spinach"], steps: ["Season chicken with salt, pepper and oregano. Sear skin-side down in an oven-safe pan until golden; flip and set aside.", "Soften onion in the same pan. Stir in garlic and orzo, then add stock and lemon zest.", "Nestle chicken on top and bake at 400°F (200°C) for 20 minutes. Fold in spinach and lemon juice before serving."] },
+      { title: "No-bake chocolate oat bites", category: "Sweet", time: "15 min + chill", description: "A little chocolatey something for the afternoon.", image: "photo-1499636136210-6f4ee915583e", alt: "Chocolate cookies and a sweet baked treat", ingredients: ["1 cup rolled oats", "½ cup smooth peanut butter", "¼ cup honey or maple syrup", "3 tbsp cocoa powder", "2 tbsp mini chocolate chips", "1 tsp vanilla", "Pinch of flaky salt"], steps: ["Stir oats, peanut butter, honey, cocoa, chocolate chips, vanilla and salt together until evenly mixed.", "Roll into 12 small balls with your hands. If the mixture feels sticky, chill it for 10 minutes first.", "Refrigerate for 30 minutes to set. Keep covered in the fridge for an easy snack."] }
+    ];
+
+    const grid = document.querySelector("#recipes");
+    const search = document.querySelector("#search");
+    const count = document.querySelector("#count");
+    const dialog = document.querySelector("#recipe-dialog");
+    let activeFilter = "All";
+
+    function render() {
+      const query = search.value.trim().toLowerCase();
+      const visible = recipes.filter((recipe) => {
+        const matchesFilter = activeFilter === "All" || recipe.category === activeFilter;
+        const matchesSearch = `${recipe.title} ${recipe.description} ${recipe.category} ${recipe.ingredients.join(" ")}`.toLowerCase().includes(query);
+        return matchesFilter && matchesSearch;
+      });
+      count.textContent = `${visible.length} ${visible.length === 1 ? "recipe" : "recipes"} to make`;
+      if (!visible.length) {
+        grid.innerHTML = '<div class="empty"><strong>Nothing on the menu just yet.</strong>Try another search or browse all recipes.</div>';
+        return;
+      }
+      grid.innerHTML = visible.map((recipe, index) => {
+        const recipeIndex = recipes.indexOf(recipe);
+        const imageUrl = `https://images.unsplash.com/${recipe.image}?auto=format&fit=crop&w=900&q=82`;
+        return `<article class="recipe" style="animation-delay:${Math.min(index * 45, 250)}ms"><button class="recipe-button" type="button" data-recipe="${recipeIndex}" aria-label="View ${recipe.title} recipe"><div class="photo-wrap"><img class="photo" src="${imageUrl}" alt="${recipe.alt}" loading="lazy"><span class="tag">${recipe.category}</span></div><div class="recipe-info"><div><h2>${recipe.title}</h2><p class="description">${recipe.description}</p></div><span class="time">${recipe.time}</span></div></button></article>`;
+      }).join("");
+    }
+
+    function openRecipe(index) {
+      const recipe = recipes[index];
+      document.querySelector("#dialog-photo").src = `https://images.unsplash.com/${recipe.image}?auto=format&fit=crop&w=1200&q=85`;
+      document.querySelector("#dialog-photo").alt = recipe.alt;
+      document.querySelector("#dialog-category").textContent = recipe.category;
+      document.querySelector("#dialog-title").textContent = recipe.title;
+      document.querySelector("#dialog-meta").textContent = `⏱  ${recipe.time}  ·  Serves 2–4`;
+      document.querySelector("#dialog-ingredients").innerHTML = recipe.ingredients.map((item) => `<li>${item}</li>`).join("");
+      document.querySelector("#dialog-steps").innerHTML = recipe.steps.map((step) => `<li>${step}</li>`).join("");
+      dialog.showModal();
+    }
+
+    document.querySelector(".filters").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-filter]");
+      if (!button) return;
+      activeFilter = button.dataset.filter;
+      document.querySelectorAll(".filter").forEach((filter) => filter.setAttribute("aria-pressed", String(filter === button)));
+      render();
+    });
+    search.addEventListener("input", render);
+    grid.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-recipe]");
+      if (button) openRecipe(Number(button.dataset.recipe));
+    });
+    document.querySelector(".close").addEventListener("click", () => dialog.close());
+    dialog.addEventListener("click", (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+    render();
+  </script>
+</body>
+</html>

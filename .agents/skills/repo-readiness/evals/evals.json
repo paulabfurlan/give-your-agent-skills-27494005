@@ -1,0 +1,23 @@
+{
+  "skill_name": "repo-readiness",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Can you check this repository's readiness for AI-assisted development? Please show me the score, the files that contributed, and the top three practical improvements.",
+      "expected_output": "Runs the bundled deterministic assessment script against the repository and reports its score, band, evidence, and top recommendations without inventing or adjusting points.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I want a readiness score for the project under ./services/payments, not the whole workspace. Please make sure the score is reproducible and explain what it does and doesn't measure.",
+      "expected_output": "Assesses only the specified repository path and explains the script-derived score and the limits of file-presence scoring.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "The report says we have no agent instructions or reusable workflows. Can you add an AGENTS.md and a review prompt that fit this repo?",
+      "expected_output": "First inspects the project and existing artifacts, then asks for missing scope details if needed or creates only the requested artifacts, and reruns the deterministic assessment to report the change.",
+      "files": []
+    }
+  ]
+}
